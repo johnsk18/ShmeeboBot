@@ -19,4 +19,4 @@ Discord Bot used for server entertainment via audio and tallying commands.
 **roll** *x*d*y*- rolls *x* amount of *y*-sided dice. \
 **theme** - lists all audio commands. Can be played when entered after ~ prefix. \
 **theme** *x* - sets audio file *x* to be played whenever the user joins to a voice channel. \
-**themefollow** - toggleable command resulting in their theme following the user across voice channels. \
+**themefollow** - toggleable command resulting in their theme following the user across voice channels.
