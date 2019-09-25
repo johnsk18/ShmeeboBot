@@ -192,7 +192,7 @@ bot.on('message', async msg => {
         output += "**theme** - lists all audio commands. Can be played when entered after ~ prefix.\n";
         output += "**theme** *x* - sets audio file *x* to be played whenever the user joins to a voice channel.\n";
         output += "**themefollow** - toggleable command resulting in their theme following the user across voice channels.\n";
-        output ++ "**where** - tells user the voice channel the bot is in, if connected.\n";
+        output += "**where** - tells user the voice channel the bot is in, if connected.\n";
         break;
 
       case 'join': // adds the bot to user's voice channel
