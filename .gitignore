@@ -1,0 +1,11 @@
+# Audio Directories
+audio/
+alt_audio/
+
+# Bot Test Code
+scrap.js
+
+# Private Files
+*.json
+*.bat
+*.txt

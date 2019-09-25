@@ -93,7 +93,7 @@ var eightBallAnswers = Array("It is certain.",
                              "My sources say no.",
                              "Outlook not so good.",
                              "Very doubtful.");
-var isTest = false; // for sections of code that are used for testing new features
+var testMode = false; // for sections of code that are used for testing new features
 
 bot.on("ready", () => {
   console.log(`${bot.user.username} is up and running!`);
@@ -109,7 +109,7 @@ bot.on('message', async msg => {
     let output = "";
     let args = msg.content.slice(1).split(' ');
     console.log(`${msg.member.user.username} - ${msg.content.slice(1)}`);
-    if (isTest && msg.member.user.id === "190879336339996673") msg.delete(); // deletes any message from bot owner when in testing mode
+    if (testMode && msg.member.user.id === "190879336339996673") msg.delete(); // deletes any message from bot owner when in testing mode
     switch(args[0]) {
       case '8ball': // prints a random 8ball response
         output += eightBallAnswers[Math.floor(Math.random() * eightBallAnswers.length)];
@@ -192,6 +192,7 @@ bot.on('message', async msg => {
         output += "**theme** - lists all audio commands. Can be played when entered after ~ prefix.\n";
         output += "**theme** *x* - sets audio file *x* to be played whenever the user joins to a voice channel.\n";
         output += "**themefollow** - toggleable command resulting in their theme following the user across voice channels.\n";
+        output ++ "**where** - tells user the voice channel the bot is in, if connected.\n";
         break;
 
       case 'join': // adds the bot to user's voice channel
@@ -273,7 +274,9 @@ bot.on('message', async msg => {
         }
         break;
 
-      case 'test': // owner command used for testing
+      case 'test': // owner command used to toggle testing mode
+        testMode = !testMode;
+        if (testMode) msg.delete();
         break;
 
       case 'theme': // sets a desired audio theme to the user whenever they join a voice channel
@@ -296,6 +299,10 @@ bot.on('message', async msg => {
           userThemes.set(msg.member.user.id, Object.assign(theme, {'follow': 1 - (theme.follow ? 1 : 0)}));
           mapToJSONFile("themes.json", userThemes);
         } else output += "You currently don't have a theme set. Enter command ~theme to see a list of available themes.\n";
+        break;
+
+      case "where": // if connect, tells user the voice channel the bot is in
+        output += botVoiceChannel ? `I\'m in this voice channel: ${botVoiceChannel}\n` : "I\'m not in a voice channel.\n";
         break;
 
       default: // handles any audio file commands
