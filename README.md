@@ -18,6 +18,7 @@ Access commands with the prefix ~ infront.
 **notheme** - removes a user's theme. \
 **ping** - pings the bot. \
 **roll** *x*d*y*- rolls *x* amount of *y*-sided dice. \
+**swap** *x* - swaps *x* audio file if an alternative version exists. If *x* is ALL, swaps all alternatives. \
 **theme** - lists all audio commands. Can be played when entered after ~ prefix. \
 **theme** *x* - sets audio file *x* to be played whenever the user joins to a voice channel. \
 **themefollow** - toggleable command resulting in their theme following the user across voice channels. \

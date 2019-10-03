@@ -44,11 +44,17 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function playAudio(audioFile, userChannel) { // plays an audio file in a user's channel
+function swapAudioFile(audioFile) {
+  fs.renameSync(`./audio/${audioFile}`, `./temp/${audioFile}`);
+  fs.renameSync(`./alt_audio/${audioFile}`, `./audio/${audioFile}`);
+  fs.renameSync(`./temp/${audioFile}`, `./alt_audio/${audioFile}`)
+}
+
+function playAudio(audioFilename, userChannel) { // plays an audio file in a user's channel
   isReady = false;
   if (botVoiceChannel && botVoiceChannel !== userChannel) botVoiceChannel.leave();
   botVoiceChannel = userChannel;
-  botVoiceChannel.join().then(connection => connection.playFile(`./audio/${audioFile}.mp3`)).catch(console.error);
+  botVoiceChannel.join().then(connection => connection.playFile(`./audio/${audioFilename}.mp3`)).catch(console.error);
   isReady = true;
 }
 
@@ -189,6 +195,7 @@ bot.on('message', async msg => {
         output += "**notheme** - removes a user's theme.\n";
         output += "**ping** - pings the bot.\n";
         output += "**roll** *x*d*y*- rolls *x* amount of *y*-sided dice.\n";
+        output += "**swap** *x* - swaps *x* audio file if an alternative version exists. If *x* is ALL, swaps all alternatives.\n"
         output += "**theme** - lists all audio commands. Can be played when entered after ~ prefix.\n";
         output += "**theme** *x* - sets audio file *x* to be played whenever the user joins to a voice channel.\n";
         output += "**themefollow** - toggleable command resulting in their theme following the user across voice channels.\n";
@@ -272,6 +279,17 @@ bot.on('message', async msg => {
           output += msg.content.slice(5);
           msg.delete();
         }
+        break;
+
+      case 'swap': // swaps alternative files, either one or all of them
+        if (args.length < 2) output += "Invalid number of arguments!\nUsage: ~swap <audio file name or ALL>\n";
+        else if (args[1] === "ALL") {
+          fs.readdirSync('./alt_audio').map(file => swapAudioFile(file));
+          output += "All alterntive files have been swapped.\n";
+        } else if (fs.existsSync(`./alt_audio/${args[1]}.mp3`)) {
+          swapAudioFile(`${args[1]}.mp3`);
+          output += `The audio file ${args[1]} has been swapped.\n`;
+        } else output += "There is no alternative file for this audio.\n";
         break;
 
       case 'test': // owner command used to toggle testing mode
