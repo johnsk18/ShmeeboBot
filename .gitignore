@@ -1,11 +1,15 @@
 # Audio Directories
-audio/
 alt_audio/
-
-# Bot Test Code
-scrap.js
+audio/
+node_modules/
+scrap/
+temp/
 
 # Private Files
-*.json
 *.bat
+*.c
+*.exe
+*.json
+*.out
+*.py
 *.txt
