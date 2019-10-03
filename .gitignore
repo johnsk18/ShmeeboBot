@@ -1,15 +1,5 @@
-# Audio Directories
-alt_audio/
-audio/
-node_modules/
-scrap/
-temp/
-
-# Private Files
-*.bat
-*.c
-*.exe
-*.json
-*.out
-*.py
-*.txt
+# Excludes all except for what's necessary
+*
+!*.js
+!*.md
+!LICENSE
